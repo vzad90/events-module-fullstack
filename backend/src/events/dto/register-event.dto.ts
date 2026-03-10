@@ -13,4 +13,3 @@ export class RegisterEventDto {
   @IsString()
   phone: string;
 }
-

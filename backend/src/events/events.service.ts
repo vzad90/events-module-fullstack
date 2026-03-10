@@ -3,6 +3,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { InjectQueue } from '@nestjs/bull';
+import type { Queue } from 'bull';
 import { Event } from './entities/event.entity';
 import { EVENTS } from './data/events.data';
 import { GetEventsQueryDto } from './dto/get-events.query.dto';
@@ -70,6 +72,11 @@ export class EventsService {
     return EVENTS.find((event) => event.id === id);
   }
 
+  constructor(
+    @InjectQueue('event-registrations')
+    private readonly registrationQueue: Queue,
+  ) {}
+
   registerForEvent(eventId: string, dto: RegisterEventDto): Registration {
     const event = this.getEventById(eventId);
 
@@ -101,6 +108,25 @@ export class EventsService {
     };
 
     this.registrations.push(registration);
+
+    void this.registrationQueue.add(
+      'event-registration',
+      {
+        eventId,
+        fullName: registration.fullName,
+        email: registration.email,
+        phone: registration.phone,
+      },
+      {
+        attempts: 3,
+        backoff: {
+          type: 'exponential',
+          delay: 3000,
+        },
+        removeOnComplete: true,
+        removeOnFail: false,
+      },
+    );
 
     return registration;
   }

@@ -57,4 +57,8 @@ export class EventsService {
       totalPages,
     };
   }
+
+  getEventById(id: string): Event | undefined {
+    return EVENTS.find((event) => event.id === id);
+  }
 }

@@ -2,6 +2,8 @@ import {
   Controller,
   Get,
   NotFoundException,
+  Body,
+  Post,
   Param,
   Query,
 } from '@nestjs/common';
@@ -9,6 +11,7 @@ import { EventsService } from './events.service';
 import type { GetEventsResult } from './events.service';
 import type { Event } from './entities/event.entity';
 import { GetEventsQueryDto } from './dto/get-events.query.dto';
+import { RegisterEventDto } from './dto/register-event.dto';
 
 @Controller('events')
 export class EventsController {
@@ -28,5 +31,18 @@ export class EventsController {
     }
 
     return event;
+  }
+
+  @Post(':id/register')
+  registerForEvent(
+    @Param('id') id: string,
+    @Body() dto: RegisterEventDto,
+  ): { success: boolean; message: string } {
+    this.eventsService.registerForEvent(id, dto);
+
+    return {
+      success: true,
+      message: 'Registration successful',
+    };
   }
 }

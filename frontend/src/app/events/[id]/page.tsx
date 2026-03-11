@@ -24,38 +24,40 @@ function formatDate(value: string): string {
 
 function EventDetails({ event }: { event: EventDetail }) {
   return (
-    <div className="flex w-full flex-col gap-4">
-      <div className="flex items-center justify-between gap-3">
-        <a
-          href="/events"
-          className="inline-flex items-center justify-center rounded-full border border-neutral-700/80 px-3 py-1 text-[11px] font-medium text-neutral-100 transition-colors hover:border-neutral-400 hover:bg-neutral-900/60"
-        >
-          Back
-        </a>
-        <span className="text-[11px] text-neutral-400">
+    <div className="flex w-full flex-col gap-5">
+      <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-neutral-500">
+        <nav className="flex items-center gap-1 text-sm">
+          <a
+            href="/events"
+            className="rounded-full border border-transparent px-2 py-1 text-neutral-600 transition-colors hover:border-neutral-300 hover:bg-neutral-100"
+          >
+            Events
+          </a>
+          <span>/</span>
+          <span className="line-clamp-1 text-neutral-500">{event.title}</span>
+        </nav>
+        <span className="font-medium text-neutral-600">
           {formatDate(event.date)}
         </span>
       </div>
       <div className="flex flex-col gap-2">
-        <div className="flex flex-wrap items-baseline justify-between gap-3">
-          <h1 className="text-base font-semibold text-neutral-50">
-            {event.title}
-          </h1>
-        </div>
-        <div className="flex flex-wrap items-center gap-2 text-xs text-neutral-400">
+        <h1 className="text-2xl font-semibold text-neutral-900">
+          {event.title}
+        </h1>
+        <div className="flex flex-wrap items-center gap-2 text-sm text-neutral-600">
           <span>{event.location}</span>
         </div>
       </div>
-      <div className="rounded-xl border border-neutral-800/30 bg-neutral-900/40 px-4 py-3 text-xs text-neutral-200">
-        <p className="font-medium text-neutral-100">{event.shortDescription}</p>
-        <p className="mt-2 whitespace-pre-line text-neutral-200">
+      <div className="rounded-2xl border border-neutral-200 bg-white px-5 py-4 text-sm text-neutral-800 shadow-sm">
+        <p className="font-medium text-neutral-900">{event.shortDescription}</p>
+        <p className="mt-3 whitespace-pre-line text-neutral-700">
           {event.description}
         </p>
       </div>
-      <div className="mt-2 flex gap-3">
+      <div className="mt-1 flex gap-3">
         <button
           type="button"
-          className="inline-flex items-center justify-center rounded-full bg-neutral-100 px-4 py-2 text-xs font-medium text-neutral-900 transition-colors hover:bg-neutral-200"
+          className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-neutral-800"
         >
           Register
         </button>

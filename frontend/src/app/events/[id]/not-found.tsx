@@ -5,8 +5,7 @@ export default function EventNotFound() {
         Event not found
       </h1>
       <p className="text-xs text-neutral-400">
-        We could not find an event with the requested identifier. Please check
-        the URL or return to the events list.
+        Not find an event with the requested identifier
       </p>
       <a
         href="/events"

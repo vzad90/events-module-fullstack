@@ -1,6 +1,7 @@
 import { fetchEventById } from "@/lib/api/events";
 import type { EventDetail } from "@/types/events";
 import { ApiError } from "@/types/events";
+import { RegistrationSection } from "./registration-section";
 import { notFound } from "next/navigation";
 
 interface EventDetailsPageProps {
@@ -54,14 +55,7 @@ function EventDetails({ event }: { event: EventDetail }) {
           {event.description}
         </p>
       </div>
-      <div className="mt-1 flex gap-3">
-        <button
-          type="button"
-          className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-neutral-800"
-        >
-          Register
-        </button>
-      </div>
+      <RegistrationSection eventId={event.id} eventTitle={event.title} />
     </div>
   );
 }

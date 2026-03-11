@@ -1,4 +1,6 @@
-"use client";
+'use client';
+
+import Link from "next/link";
 
 interface EventDetailsErrorProps {
   error: Error & { digest?: string };
@@ -21,12 +23,12 @@ export default function EventDetailsError({ reset }: EventDetailsErrorProps) {
         >
           Try again
         </button>
-        <a
+        <Link
           href="/events"
           className="inline-flex items-center justify-center rounded-full border border-red-300/60 px-3 py-1 text-[11px] font-medium text-red-100 transition-colors hover:border-red-100 hover:bg-red-900/40"
         >
           Back to events
-        </a>
+        </Link>
       </div>
     </div>
   );

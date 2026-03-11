@@ -47,7 +47,7 @@ async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
   return (await response.json()) as T;
 }
 
-export interface FetchEventsParams {
+interface FetchEventsParams {
   page?: number;
   limit?: number;
   search?: string;

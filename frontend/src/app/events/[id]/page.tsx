@@ -2,13 +2,20 @@ import { fetchEventById } from "@/lib/api/events";
 import type { EventDetail } from "@/types/events";
 import { ApiError } from "@/types/events";
 import { RegistrationSection } from "./registration-section";
+import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 
 interface EventDetailsPageProps {
   params: Promise<{
     id: string;
   }>;
 }
+
+export const metadata: Metadata = {
+  title: "Event details",
+  description: "View event details and register for the event.",
+};
 
 function formatDate(value: string): string {
   const date = new Date(value);
@@ -28,12 +35,12 @@ function EventDetails({ event }: { event: EventDetail }) {
     <div className="flex w-full flex-col gap-5">
       <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-neutral-500">
         <nav className="flex items-center gap-1 text-sm">
-          <a
+          <Link
             href="/events"
             className="rounded-full border border-transparent px-2 py-1 text-neutral-600 transition-colors hover:border-neutral-300 hover:bg-neutral-100"
           >
             Events
-          </a>
+          </Link>
           <span>/</span>
           <span className="line-clamp-1 text-neutral-500">{event.title}</span>
         </nav>

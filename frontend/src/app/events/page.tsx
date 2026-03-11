@@ -1,6 +1,8 @@
 import { fetchEvents } from "@/lib/api/events";
 import type { EventListItem, PaginatedEventsResponse } from "@/types/events";
+import { Suspense } from "react";
 import { EventsFilters } from "./filters";
+import type { Metadata } from "next";
 
 interface EventsPageProps {
   searchParams?: Promise<{
@@ -10,6 +12,11 @@ interface EventsPageProps {
     dateTo?: string;
   }>;
 }
+
+export const metadata: Metadata = {
+  title: "Events",
+  description: "Browse upcoming events and register for them.",
+};
 
 function formatDate(value: string): string {
   const date = new Date(value);
@@ -172,7 +179,9 @@ export default async function EventsPage({ searchParams }: EventsPageProps) {
           register.
         </p>
       </div>
-      <EventsFilters />
+      <Suspense fallback={null}>
+        <EventsFilters />
+      </Suspense>
       {eventsResponse.data.length === 0 ? (
         <div className="mt-6 rounded-xl border border-dashed border-neutral-700/60 bg-neutral-900/40 px-4 py-6 text-center text-xs text-neutral-300">
           No events found for the current filters.

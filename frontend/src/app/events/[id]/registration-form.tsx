@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { registerForEvent } from "@/lib/api/events";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
+import { Label } from "@/components/ui/Label";
 
 interface EventRegistrationFormProps {
   eventId: string;
@@ -131,62 +134,54 @@ export function EventRegistrationForm({
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
-        <label
-          htmlFor="fullName"
-          className="text-sm font-medium text-neutral-800"
-        >
+        <Label htmlFor="fullName">
           Full name
-        </label>
-        <input
+        </Label>
+        <Input
           id="fullName"
           name="fullName"
           type="text"
           value={form.fullName}
           onChange={handleChange}
-          className="h-10 rounded-full border border-neutral-300 bg-white px-4 text-sm text-neutral-900 outline-none transition-colors placeholder:text-neutral-400 focus:border-neutral-900 focus:ring-0"
           placeholder="Your full name"
         />
       </div>
       <div className="flex flex-col gap-1">
-        <label
-          htmlFor="email"
-          className="text-sm font-medium text-neutral-800"
-        >
+        <Label htmlFor="email">
           Email
-        </label>
-        <input
+        </Label>
+        <Input
           id="email"
           name="email"
           type="email"
           value={form.email}
           onChange={handleChange}
-          className="h-10 rounded-full border border-neutral-300 bg-white px-4 text-sm text-neutral-900 outline-none transition-colors placeholder:text-neutral-400 focus:border-neutral-900 focus:ring-0"
           placeholder="you@example.com"
         />
       </div>
       <div className="flex flex-col gap-1">
-        <label htmlFor="phone" className="text-sm font-medium text-neutral-800">
+        <Label htmlFor="phone">
           Phone
-        </label>
+        </Label>
         <div className="flex gap-2">
           <select
             name="phoneCode"
             value={form.phoneCode}
             onChange={handleCodeChange}
-            className="h-10 rounded-full border border-neutral-300 bg-white pl-1 pr-1 text-sm text-neutral-900 outline-none transition-colors focus:border-neutral-900 focus:ring-0"
+            className="h-10 rounded-full border border-neutral-300 bg-white pl-3 pr-7 text-sm text-neutral-900 outline-none transition-colors focus:border-neutral-900 focus:ring-0"
           >
             <option value="+380">+380</option>
             <option value="+48">+48</option>
             <option value="+44">+44</option>
             <option value="+49">+49</option>
           </select>
-          <input
+          <Input
             id="phone"
             name="phoneLocal"
             type="tel"
             value={form.phoneLocal}
             onChange={handleChange}
-            className="flex-1 h-10 rounded-full border border-neutral-300 bg-white px-4 text-sm text-neutral-900 outline-none transition-colors placeholder:text-neutral-400 focus:border-neutral-900 focus:ring-0"
+            className="flex-1"
             placeholder="XX XXX XXXX"
           />
         </div>
@@ -195,13 +190,9 @@ export function EventRegistrationForm({
         <p className="text-sm text-red-600">{error}</p>
       )}
       <div className="mt-1 flex justify-end gap-2">
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-neutral-800 disabled:cursor-not-allowed disabled:bg-neutral-400"
-        >
-          {isSubmitting ? "Submitting..." : "Submit registration"}
-        </button>
+        <Button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Registering..." : "Submit registration"}
+        </Button>
       </div>
     </form>
   );

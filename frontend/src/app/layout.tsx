@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -30,14 +31,14 @@ export default function RootLayout({
         <div className="min-h-screen flex flex-col">
           <header className="border-b border-neutral-200 bg-white/90 backdrop-blur">
             <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
-              <a href="/events" className="flex flex-col">
+              <Link href="/events" className="flex flex-col">
                 <span className="text-lg font-semibold tracking-wide text-neutral-900">
                   Events
                 </span>
                 <span className="text-sm text-neutral-500">
                   Browse events and register in one place
                 </span>
-              </a>
+              </Link>
             </div>
           </header>
           <main className="mx-auto flex w-full max-w-5xl flex-1 px-4 py-8">

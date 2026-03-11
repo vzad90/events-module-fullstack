@@ -1,7 +1,10 @@
-"use client";
+'use client';
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
+import { Label } from "@/components/ui/Label";
 
 export function EventsFilters() {
   const router = useRouter();
@@ -50,75 +53,71 @@ export function EventsFilters() {
   }, [router]);
 
   return (
-    <form
-      className="flex flex-col gap-3 rounded-2xl border border-neutral-200 bg-white px-4 py-4 text-sm text-neutral-800 md:flex-row md:items-end"
-      onSubmit={(event) => {
-        event.preventDefault();
-        applyFilters();
-      }}
-    >
+    <div className="flex flex-col gap-3 rounded-2xl border border-neutral-200 bg-white px-4 py-4 text-sm text-neutral-800 md:flex-row md:items-end">
       <div className="flex flex-1 flex-col gap-1">
-        <label
+        <Label
           htmlFor="search"
-          className="text-xs font-medium text-neutral-700"
+          className="text-xs text-neutral-700"
         >
           Search by title
-        </label>
-        <input
+        </Label>
+        <Input
           id="search"
           type="text"
           value={search}
-          onChange={(event) => setSearch(event.target.value)}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => setSearch(event.target.value)}
           placeholder="Type to search..."
-          className="h-9 rounded-md border border-neutral-300 bg-white px-3 text-sm text-neutral-900 outline-none transition-colors placeholder:text-neutral-400 focus:border-neutral-500"
+          className="h-9 rounded-md px-3"
         />
       </div>
       <div className="flex flex-1 flex-col gap-1 md:max-w-[180px]">
-        <label
+        <Label
           htmlFor="date-from"
-          className="text-xs font-medium text-neutral-700"
+          className="text-xs text-neutral-700"
         >
           From
-        </label>
-        <input
+        </Label>
+        <Input
           id="date-from"
           type="date"
           value={dateFrom}
-          onChange={(event) => setDateFrom(event.target.value)}
-          className="h-9 rounded-md border border-neutral-300 bg-white px-3 text-sm text-neutral-900 outline-none transition-colors placeholder:text-neutral-400 focus:border-neutral-500"
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => setDateFrom(event.target.value)}
+          className="h-9 rounded-md px-3"
         />
       </div>
       <div className="flex flex-1 flex-col gap-1 md:max-w-[180px]">
-        <label
+        <Label
           htmlFor="date-to"
-          className="text-xs font-medium text-neutral-700"
+          className="text-xs text-neutral-700"
         >
           To
-        </label>
-        <input
+        </Label>
+        <Input
           id="date-to"
           type="date"
           value={dateTo}
-          onChange={(event) => setDateTo(event.target.value)}
-          className="h-9 rounded-md border border-neutral-300 bg-white px-3 text-sm text-neutral-900 outline-none transition-colors placeholder:text-neutral-400 focus:border-neutral-500"
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => setDateTo(event.target.value)}
+          className="h-9 rounded-md px-3"
         />
       </div>
       <div className="flex flex-row gap-2 md:w-auto md:flex-none md:justify-end">
-        <button
-          type="submit"
-          className="inline-flex h-9 flex-1 items-center justify-center rounded-full bg-neutral-900 px-4 text-xs font-medium text-neutral-50 transition-colors hover:bg-neutral-800 md:flex-none"
+        <Button
+          type="button"
+          onClick={applyFilters}
+          className="h-9 px-4 text-xs md:flex-none"
         >
           Apply
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
+          variant="secondary"
           onClick={clearFilters}
-          className="inline-flex h-9 flex-1 items-center justify-center rounded-full border border-neutral-300 bg-transparent px-4 text-xs font-medium text-neutral-700 transition-colors hover:border-neutral-400 hover:bg-neutral-100 md:flex-none"
+          className="h-9 px-4 text-xs md:flex-none"
         >
           Clear
-        </button>
+        </Button>
       </div>
-    </form>
+    </div>
   );
 }
 

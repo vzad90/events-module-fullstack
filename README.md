@@ -1,89 +1,57 @@
 # Events Module – Backend + Frontend
 
-Fullstack events module consisting of a **NestJS backend** and a **Next.js frontend**.
-It allows users to browse upcoming events, view event details, and register for events via a simple UI.
-
----
-
-## Repository structure
-
-```text
-.
-├─ backend/   # NestJS API (events, registrations, queue)
-└─ frontend/  # Next.js + TypeScript + Tailwind UI
-```
-
----
-
-## Requirements
-
-- Node.js 20+
-- npm (or a compatible package manager)
-- Redis (for the Bull queue used by the backend)
-
----
-
 ## Backend
-
-**Stack**
-
-- NestJS (REST API)
-- TypeScript
-- Bull + Redis for async registrations
-- class-validator / class-transformer
-- Swagger (OpenAPI) docs
-
-**Endpoints**
-
-- `GET /events`
-  - Pagination and filters: `page`, `limit`, `search`, `dateFrom`, `dateTo`
-  - Response: `{ data, total, page, limit, totalPages }`
-- `GET /events/:id`
-  - Returns full event details or `404` if not found.
-- `POST /events/:id/register`
-  - Body: `{ fullName, email, phone }`
-  - Validates input and enqueues a job in the `event-registrations` Bull queue.
-  - The `RegistrationProcessor` currently logs processed registrations to the console.
+- **Framework**: NestJS  
+- **Language**: TypeScript  
+- **Queue**: Bull + Redis (background processing)  
+- **Validation**: class-validator / class-transformer  
+- **Documentation**: Swagger (OpenAPI)
 
 
+### Backend setup
 ```bash
 cd backend
 npm install
 npm run start:dev
+
+API URL: http://localhost:3000
+Swagger docs: http://localhost:3000/api
 ```
 
----
-
 ## Frontend
+- **Framework**: Next.js (App Router)
+- **Styling**: Tailwind CSS
+- **Icons/UI**: Lucide React / Headless UI
 
-**Stack**
-
-- Next.js (App Router)
-- TypeScript
-- Tailwind CSS
-
-**Key routes**
-
-- `/events`
-  - Lists events with pagination.
-  - Shows `title`, `date`, `location`, `shortDescription`.
-  - Filters:
-    - search by title,
-    - date range (`From` / `To`).
-  - Handles `loading`, `empty`, and `error` states.
-
-- `/events/[id]`
-  - Event details page with breadcrumb.
-  - Displays full event information.
-  - Includes a `Register` button that opens a registration modal.
-
-
+### Frontend setup
 ```bash
 cd frontend
 npm install
-cp .env.local
+cp .env.local.example .env.local
 npm run dev
+App URL: http://localhost:3000 (or 3001 if backend uses 3000)
 ```
----
+## API overview
+Events
+ - GET /events – fetch paginated events
+   - Query params: page, limit, search, dateFrom, dateTo
 
+ - GET /events/:id – get full event details (returns 404 if missing)
 
+Registrations
+ - POST /events/:id/register – submit attendee data
+Payload:
+```bash
+{
+  "fullName": "string",
+  "email": "string",
+  "phone": "string"
+}
+```
+Logic: validates input and pushes a job to the event-registrations queue
+
+## Key features
+- **Async processing** – registrations are handled by RegistrationProcessor in the background.
+- **Filtering** – frontend supports search by title and date range filters.
+- **Responsive UI** – works well on mobile and desktop.
+- **State handling** – clear loading, empty and error states.
